@@ -78,7 +78,9 @@ module.exports.assets = function (options) {
                                     filenames.push(pattern);
                                 }
                                 try {
-                                    buffer.push(stripBom(fs.readFileSync(filenames[0])));
+                                    // remove hash busting query strings
+                                    var noqueryName = filenames[0].split('?')[0];
+                                    buffer.push(stripBom(fs.readFileSync(noqueryName)));
                                 } catch (err) {
                                     this.emit('error', new gutil.PluginError('gulp-useref', err));
                                 }
